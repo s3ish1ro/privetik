@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    srand(NULL);
+    srand(time(0));
     double min_x, a;
     int n, i, j, min_index;
     n = 10;
