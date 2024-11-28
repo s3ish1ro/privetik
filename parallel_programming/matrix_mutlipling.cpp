@@ -31,7 +31,7 @@ int main() {
             /*if (j < i)
                 m[i][j] = 0;
             else
-                m[i][j] = rand() * 1.0 / RAND_MAX;*/
+                m[i][j] = rand() * 1.0 / RAND_MAX;*/ //генерация треугольной матрицы
 
     for (i = 0; i < n; i++)
         for (j = 0; j < n; j++)
