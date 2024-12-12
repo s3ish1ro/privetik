@@ -8,8 +8,8 @@ using namespace std;
 int main() {
     srand(time(0));
     int n, i, j, k;
-    n = 3;
-    double summ;
+    n = 4;
+    double summ, tmp, s1;
     double** m;
     double* result;
     double** check;
@@ -31,37 +31,42 @@ int main() {
             cout << m[i][j] << " ";
         cout << endl;
     }
-    double tmp;
+    
     /*прямой ход*/
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i++)  //преобразование матрицы в треугольную
     {
-        tmp = m[i][i];
-        for (j = n; j >= i; j--)
-            m[i][j] /= tmp;
         for (j = i + 1; j < n; j++)
         {
-            tmp = m[j][i];
-            for (k = n; k >= i; k--)
-                m[j][k] -= tmp * m[i][k];
+            tmp = m[j][i] / m[i][i];
+            for (k = 0; k < n + 1; k++)
+                m[j][k] -= m[i][k] * tmp;
         }
     }
     /*обратный ход*/
-    result[n - 1] = m[n - 1][n];
-    for (i = n - 2; i >= 0; i--)
-    {
+    result[n - 1] = m[n - 1][n] / m[n - 1][n - 1]; 
+    for (i = n - 2; i > -1; i--) {
         result[i] = m[i][n];
-        for (j = i + 1; j < n; j++) result[i] -= m[i][j] * result[j];
+        for (j = i + 1; j < n; j++)
+            result[i] -= m[i][j] * result[j];
+        result[i] /= m[i][i];
     }
+
+    
     /*вывод решения*/
     cout << "---------------" << endl;
     for (i = 0; i < n; i++)
         cout << i + 1 << " " << result[i] << endl;
+    
+    cout << "check:" << endl;
     /*проверка*/
     for (i = 0; i < n; i++) {
         summ = 0;
         for (j = 0; j < n; j++)
             summ += check[i][j] * result[j];
-        cout << summ << endl;
+        if (fabs(summ - check[i][n]) < 1e-6)
+            cout << summ << " +" << endl;
+        else
+            cout << summ << " Miss" << endl;
     }
     return 0;
 }
